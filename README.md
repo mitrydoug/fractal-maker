@@ -10,8 +10,4 @@ Fractals, as they relate to this project, are cool mathematical figures that exh
 
 Any fractal created by my program is defined by a "generator". A generator is a set of vectors drawn in the x/y plane. Each of these vectors has certain attributes that define how they behave, and exacly one of these serves as a reference vector. Details will be explained later. For now, lets take a look at an example:
 
-<div class="centered">
-![](https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/generator1.jpg)
-</div>
-
-
+<div class="centered"><img src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/generator1.jpg"></div>
