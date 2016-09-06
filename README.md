@@ -26,11 +26,13 @@ The above fractal is a portion of a figure known as the **Koch Snowflake**. Whil
 
 Here are some example fractals (some shown alongside their generators) that were generated with this software.
 
-<div class="centered"><img src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal3.jpg"></div>
-<div class="centered"><img src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal4.jpg"></div>
-<div class="centered"><img src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal5.jpg"></div>
-<div class="centered"><img src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal6.jpg"></div>
-<div class="centered"><img src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal7.jpg"></div>
-<div class="centered"><img src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/rightangle.png"></div>
-<div class="centered"><img src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fern.png"></div>
-<div class="centered"><img src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/square5.png"></div>
+<div class="img-gallery">
+<img style="display:none" src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal3.jpg">
+<img style="display:none" src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal4.jpg">
+<img style="display:none" src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal5.jpg">
+<img style="display:none" src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal6.jpg">
+<img style="display:none" src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fractal7.jpg">
+<img style="display:none" src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/rightangle.png">
+<img style="display:none" src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/fern.png">
+<img style="display:none" src="https://raw.githubusercontent.com/mitrydoug/fractal-maker/master/images/square5.png">
+</div>
