@@ -98,7 +98,7 @@ public class FractalFrame extends JFrame implements ActionListener{
 		public void paintComponent(Graphics g){
 			super.paintComponent(g);
 			for(int i=0; i<fractal.length; i++){
-			 FractalLine line = fractal[i];
+			    FractalLine line = fractal[i];
 			    g.drawLine(getXDispRef(line.x1(), getWidth()), getYDispRef(line.y1(), getHeight()),
 			               getXDispRef(line.x2(), getWidth()), getYDispRef(line.y2(), getHeight()));
 			}
@@ -130,7 +130,7 @@ public class FractalFrame extends JFrame implements ActionListener{
             FractalLineInfo[] infos = new FractalLineInfo[data.length];
             double refAngle = ref.angle();
             double refLength = ref.length();
-            for(int i=0; i<data.length; i++){
+            for (int i=0; i<data.length; i++) {
                 FractalLine current = data[i];
                 double lineAngle = current.angle();
                 double lineLength = current.length();
@@ -164,23 +164,23 @@ public class FractalFrame extends JFrame implements ActionListener{
                         }
                         if(cLine.recursive()){
                             FractalLine[] newLines = new FractalLine[base.lines.length];
-                            FractalLine newRef = FractalLine.makeReferenceLine(cLine);
                             FractalPacket newPacket = new FractalPacket(newLines, cLine);
                             for(int m=0; m<cPacket.lines.length; m++){ // for, again, all lines in the packet
                                 FractalLine lineMirror;
                                 double transX1 = newPacket.ref.x1();
                                 double transY1 = newPacket.ref.y1();
-                                double transAngle = newPacket.ref.angle() + infos[m].transAngle;
+                                double transAngle = newPacket.ref.angle() + (newPacket.ref.inverted() ? -1.0 : 1.0) * infos[m].transAngle;
                                 double transLength = newPacket.ref.length() * infos[m].transPerLength;
                                 double lineX1 = transX1 + transLength*Math.cos(transAngle);
                                 double lineY1 = transY1 + transLength*Math.sin(transAngle);
-                                double lineAngle = newPacket.ref.angle() + infos[m].lineAngle;
+                                double lineAngle = newPacket.ref.angle() + (newPacket.ref.inverted() ? -1.0 : 1.0) * infos[m].lineAngle;
                                 double lineLength = newPacket.ref.length() * infos[m].linePerLength;
                                 double lineX2 = lineX1 + lineLength*Math.cos(lineAngle);
                                 double lineY2 = lineY1 + lineLength*Math.sin(lineAngle);
                                 lineMirror = new FractalLine(lineX1, lineY1, lineX2, lineY2);
                                 lineMirror.recursive = cPacket.lines[m].recursive;
                                 lineMirror.permanent = cPacket.lines[m].permanent;
+                                lineMirror.inverted = newPacket.ref.inverted() ? !base.lines[m].inverted : base.lines[m].inverted;
                                 newPacket.lines[m] = lineMirror;
                             }
                             it2[it2index] = newPacket;

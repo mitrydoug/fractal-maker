@@ -7,11 +7,13 @@ import java.io.Serializable;
 public class FractalLine{
 
 	private FractalPoint p1, p2;
-	public boolean recursive, permanent, reference;
+	public boolean recursive, permanent, reference, inverted;
 	private boolean focused;
+
+    /* Provide a negative orientation for lines */
+
 	private GeneratorPanel genPanel;
 	private DecimalFormat df;
-	private Polygon poly;
 
 	private class FractalPoint{
 		public double x;
@@ -54,10 +56,21 @@ public class FractalLine{
 		p2.y = a;
 	}
 
+    public void setInverted(boolean in) {
+        inverted = in;
+    }
+
 	public double[][] getPolygon(){
 		//creates a central triangle
-		double[] xpoints = {p1.x + 0.54*(p2.x-p1.x), (p1.x + 0.46*(p2.x-p1.x))-0.04*(p2.y-p1.y),(p1.x + 0.46*(p2.x-p1.x))+0.04*(p2.y-p1.y)};
-		double[] ypoints = {p1.y + 0.54*(p2.y-p1.y), (p1.y + 0.46*(p2.y-p1.y))+0.04*(p2.x-p1.x),(p1.y + 0.46*(p2.y-p1.y))-0.04*(p2.x-p1.x)};
+        double in = inverted ? 0.0 : 0.06;
+
+		double[] xpoints = {p1.x + 0.54*(p2.x-p1.x),
+                           p1.x + 0.46*(p2.x-p1.x) - in * (p2.y-p1.y),
+                           p1.x + 0.46*(p2.x-p1.x) + (0.06-in)*(p2.y-p1.y)};
+
+		double[] ypoints = {p1.y + 0.54*(p2.y-p1.y),
+                            p1.y + 0.46*(p2.y-p1.y) + in * (p2.x-p1.x),
+                            p1.y + 0.46*(p2.y-p1.y) - (0.06-in)*(p2.x-p1.x)};
 		double[][] res = new double[2][3];
 		res[0] = xpoints;
 		res[1] = ypoints;
@@ -94,6 +107,7 @@ public class FractalLine{
 	public boolean recursive(){ return recursive; }
 	public boolean permanent(){ return permanent; }
 	public boolean reference(){ return reference; }
+    public boolean inverted(){ return inverted; }
 
 	//static function!
 	public static FractalLine makeReferenceLine(FractalLine line){

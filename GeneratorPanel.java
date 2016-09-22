@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,7 +16,7 @@ public class GeneratorPanel extends JPanel implements ActionListener, MouseListe
 		private JLabel x1Label, y1Label, x2Label, y2Label;
 		public JTextField x1Field, y1Field, x2Field, y2Field;
 		public JCheckBox ref, per, rec;
-		public JButton ok, delete, swap;
+		public JButton ok, delete, swap, invert;
 
 		private FractalFrame fracFrame;
 
@@ -110,9 +109,14 @@ public class GeneratorPanel extends JPanel implements ActionListener, MouseListe
 			delete = new JButton("delete");
 			delete.setActionCommand("delete");
 			delete.addActionListener(this);
+            invert = new JButton("invert");
+            invert.setActionCommand("invert");
+            invert.addActionListener(this);
 			btnPanel = new JPanel();
 			BoxLayout layout = new BoxLayout(btnPanel, BoxLayout.Y_AXIS);
 			btnPanel.setLayout(layout);
+			btnPanel.add(invert);
+			btnPanel.add(Box.createRigidArea(new Dimension(100, 5)));
 			btnPanel.add(delete);
 			btnPanel.add(Box.createRigidArea(new Dimension(100, 5)));
 			btnPanel.add(ok);
@@ -366,11 +370,6 @@ public class GeneratorPanel extends JPanel implements ActionListener, MouseListe
 					repaint();
 				} else{
 					focusedLine.permanent = false;
-					if(!focusedLine.recursive){
-						ok.setEnabled(false);
-					} else {
-						repaint();
-					}
 				}
 			} else if(command.equals("rec")){
 				if(rec.isSelected()){
@@ -379,9 +378,6 @@ public class GeneratorPanel extends JPanel implements ActionListener, MouseListe
 					repaint();
 				} else{
 					focusedLine.recursive = false;
-					if(!focusedLine.permanent){
-						ok.setEnabled(false);
-					}
 					repaint();
 				}
             } else if(command.equals("delete")){
@@ -427,7 +423,10 @@ public class GeneratorPanel extends JPanel implements ActionListener, MouseListe
 				    fracFrame.setFieldBounds(minX, maxX, minY, maxY);
 				    fracFrame.drawFractal(data, referenceLine);
 				}
-			}
+			} else if (command.equals("invert")) {
+               focusedLine.setInverted(!focusedLine.inverted());
+               repaint(); 
+            }
 		}
 
 		double x1, y1, x2, y2;
