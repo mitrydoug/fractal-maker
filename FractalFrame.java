@@ -82,7 +82,7 @@ public class FractalFrame extends JFrame implements ActionListener{
 
 	private class FractalPanel extends JPanel{
 
-        private double minX, maxX, minY, maxY;
+        public double minX, maxX, minY, maxY;
 
         public FractalLine[] data;
         public FractalLine ref;
@@ -148,21 +148,21 @@ public class FractalFrame extends JFrame implements ActionListener{
                 infos[i] =  lineInfo;
             }
             FractalPacket base = new FractalPacket(data, ref);
-            FractalPacket[] it1 = new FractalPacket[1];
-            it1[0] = base;
-            FractalPacket[] it2;
-            ArrayList<FractalLine> permanents = new ArrayList<FractalLine>();
+            ArrayList<FractalPacket> it1 = new ArrayList<FractalPacket>();
+            it1.add(base);
+            ArrayList<FractalPacket> it2;
+            ArrayList<FractalLine> fixed = new ArrayList<FractalLine>();
             for(int i=0; i<iterations; i++){ // each iteration...
-                it2 = new FractalPacket[it1.length*getNumRecursive(data)];
-                int it2index = 0;
-                for(int j=0; j<it1.length; j++){ // each packet
-                    FractalPacket cPacket = it1[j];
+                System.out.println(it1.size());
+                it2 = new ArrayList<FractalPacket>();
+                for(int j=0; j<it1.size(); j++){ // each packet
+                    FractalPacket cPacket = it1.get(j);
                     for(int k=0; k<cPacket.lines.length; k++){ //each line in the packet
                         FractalLine cLine = cPacket.lines[k];
                         if(cLine.permanent()){
-                            permanents.add(cLine);
+                            fixed.add(cLine);
                         }
-                        if(cLine.recursive()){
+                        if (cLine.recursive() && cLine.length() > 0.5 * (panel.maxX - panel.minX) / panel.getWidth()) {
                             FractalLine[] newLines = new FractalLine[base.lines.length];
                             FractalPacket newPacket = new FractalPacket(newLines, cLine);
                             for(int m=0; m<cPacket.lines.length; m++){ // for, again, all lines in the packet
@@ -183,20 +183,21 @@ public class FractalFrame extends JFrame implements ActionListener{
                                 lineMirror.inverted = newPacket.ref.inverted() ? !base.lines[m].inverted : base.lines[m].inverted;
                                 newPacket.lines[m] = lineMirror;
                             }
-                            it2[it2index] = newPacket;
-                            it2index++;
+                            it2.add(newPacket);
+                        } else {
+                            fixed.add(cLine);
                         }
                     }
                 }
                 it1 = it2;
             }
-            fractal = new FractalLine[it1.length * data.length + permanents.size()];
-            for(int i=0; i<permanents.size(); i++){
-                fractal[i] = permanents.get(i);
+            fractal = new FractalLine[it1.size() * data.length + fixed.size()];
+            for(int i=0; i<fixed.size(); i++){
+                fractal[i] = fixed.get(i);
             }
-            for(int i=0; i<it1.length; i++){
-                for(int j=0; j<it1[i].lines.length; j++){
-                    fractal[permanents.size() + data.length*i + j] = it1[i].lines[j];
+            for(int i=0; i<it1.size(); i++){
+                for(int j=0; j<it1.get(i).lines.length; j++){
+                    fractal[fixed.size() + data.length*i + j] = it1.get(i).lines[j];
                 }
             }
             repaint();
